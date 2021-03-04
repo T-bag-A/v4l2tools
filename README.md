@@ -33,6 +33,27 @@ Tools
  - v4l2compress_h264 : 
 
 >	read YUYV from a V4L2 capture device, compress in H264 format using libx264 and write to a V4L2 output device
+>	
+
+>from collections import  OrderedDict
+
+
+data_dict = OrderedDict()
+with open("testdata.txt",'r') as f :
+    for line in f.readlines():
+        dat = [ int(v) for v in line.split(' ')]
+        if dat[3] == 0:
+            continue
+        key = "{}_{}".format(dat[0],dat[1])
+        if key in data_dict:
+            data_dict[key] += dat[3]
+        else:
+            data_dict[key] = dat[3]
+
+with open('output.txt','w') as f :
+    for key in data_dict:
+        i1,i2 = key.split('_')
+        print("{} {} {}".format(i1,i2,data_dict[key]))
 
 Tools for Raspberry
 -------------------
